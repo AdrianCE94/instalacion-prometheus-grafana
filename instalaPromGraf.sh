@@ -5,7 +5,12 @@
 # gh --> https://github.com/AdrianCE94
 
 echo "Bienvenido al asistente de instalación automática de Prometheus y Grafana en el sistema"
-
+comprobarRoot() {
+    if [ "$(id -u)" != "0" ]; then
+        echo "Este script necesita permisos de superusuario para ejecutarse"
+        exit 1
+    fi
+}
 actualizarSistema() {
     echo "Actualizando sistema...."
     apt update
@@ -50,6 +55,7 @@ menu(){
     echo "3. Salir"
 }
 
+comprobarRoot
 menu
 read -p "Seleccione una opción: " opcion
 while [ "$opcion" != 3 ]; do
